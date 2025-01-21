@@ -1,0 +1,30 @@
+@use "mixins" as *;
+
+// Definición de colores del tema
+$theme-colors: (
+  "primary": #007bff,
+  "secondary": #6c757d,
+  "success": #28a745,
+  "danger": #dc3545,
+  "warning": #ffc107,
+  "info": #17a2b8,
+  "light": #f8f9fa,
+  "dark": #343a40
+);
+
+// Componente base de título
+.title {
+  font-size: 2em;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 1rem;
+  text-align: center;
+}
+
+// Generación de variantes de color
+@each $color-name, $color-value in $theme-colors {
+  .title-#{$color-name} {
+    @extend .title;
+    @include set-colors($color-value);
+  }
+}

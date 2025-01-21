@@ -1,0 +1,18 @@
+@use "sass:color";
+@use "functions" as *;
+
+
+@mixin set-colors($bg-color) {
+  @if is-valid-hex-color($bg-color) {
+    background-color: $bg-color;
+    // Aqui puedo realmente cambiar los colores a lo que quiera dependiendo de la luminosidad del color
+    @if color.channel($bg-color, "lightness", $space: hsl) > 50% {
+      color: #000000;
+    } @else {
+      color: #ffffff;
+    }
+  } @else {
+    background-color: white;
+    color: black;
+  }
+}

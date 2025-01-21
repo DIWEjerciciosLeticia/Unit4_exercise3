@@ -1,0 +1,35 @@
+@use "sass:meta";
+@use "sass:string";
+@use "sass:list";
+@use "sass:math";
+
+// Función para validar color hexadecimal
+@function is-valid-hex-color($color) {
+  // Convertir el color a string usando meta.inspect
+  $color-str: meta.inspect($color);
+  
+  // Verificar longitud (4, 7 o 9 caracteres)
+  $valid-length: string.length($color-str) == 4 or 
+                 string.length($color-str) == 7 or 
+                 string.length($color-str) == 9;
+  
+  // Verificar que empiece con #
+  $starts-with-hash: string.slice($color-str, 1, 1) == '#';
+  
+  // Verificar caracteres hexadecimales válidos
+  $hex-chars: '0123456789abcdefABCDEF';
+  $valid-chars: true;
+  
+  @if $valid-length and $starts-with-hash {
+    @for $i from 2 through string.length($color-str) {
+      $char: string.slice($color-str, $i, $i);
+      @if not string.index($hex-chars, $char) {
+        $valid-chars: false;
+      }
+    }
+  } @else {
+    $valid-chars: false;
+  }
+  
+  @return $valid-length and $starts-with-hash and $valid-chars;
+}
